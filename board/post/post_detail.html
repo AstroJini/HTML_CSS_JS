@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판 서비스</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
@@ -31,22 +32,68 @@
 
     <div class="container">
         
-        <h3>게시글 상세 조회</h3>
-        <div>    
-            <table class="table">
-                <tr>
-                    <td>id</td><td>1</td>
-                </tr>
-                <tr>
-                    <td>title</td><td>hello</td>
-                </tr>
-                <tr>
-                    <td>contents</td><td>hello world html ... </td>
-                </tr>
-            </table>
-        </div>
+        <div class="container">
+        <h3>게시글상세조회</h3>
+        <input type="text" id="postId">
+        <button class="btn btn-primary" onclick="serverData()">조회</button>
+        <table class="table">
+            <tr>
+                <td>id</td><td id="id"></td>
+            </tr>
+            <tr>
+                <td>userId</td><td id="userId"></td>
+            </tr>
+            <tr>
+                <td>title</td><td id="title"></td>
+            </tr>
+            <tr>
+                <td>body</td><td id="body"></td>
+            </tr>
+        </table>
+    </div>
 
     </div>
 
+        <script>
+            async function serverData(){
+                try{
+                    const id = document.getElementById("postId").value;
+                    const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`);
+                    const result = response.data;
+                    document.getElementById("id").innerHTML = result.id;
+                    document.getElementById("userId").innerHTML = result.userId;
+                    document.getElementById("title").innerHTML = result.title;
+                    document.getElementById("body").innerHTML = result.body;
+                    console.log(result);
+                }catch(e){
+                    console.log(e);
+                    alert("입력값이 ")
+                }
+            }
+
+    </script>
+    <!-- <script>
+        async function searchPost(){
+         const postId = document.getElementById("inputNumber").value.trim();
+            if (!postId) {
+                alert("번호를 입력해주세요.");
+                return;
+            }
+
+            try {
+                const result = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+                const post = result.data;
+
+                document.getElementById("tdId").innerHTML = `<span>${post.id}</span>`;
+                document.getElementById("tdTitle").innerHTML = `<span>${post.title}</span>`;
+                document.getElementById("tdContents").innerHTML = `<span>${post.body}</span>`;
+            } catch (error) {
+                alert("해당 번호의 게시글을 찾을 수 없습니다. \n게시글의 번호만 입력해주세요" );
+                document.getElementById("tdId").innerHTML = `<span>-</span>`;
+                document.getElementById("tdTitle").innerHTML = `<span>-</span>`;
+                document.getElementById("tdContents").innerHTML = `<span>-</span>`;
+            }
+        }
+    </script> -->
 </body>
 </html>
