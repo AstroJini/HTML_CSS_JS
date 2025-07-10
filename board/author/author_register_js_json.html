@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>post_list</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <nav class="navbar bg-dark navbar-dark navbar-expand-lg">
+        <a href="/board/post/post_list.html" class="navbar-brand mx-auto">게시판 서비스</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="/board/author/author_list_external.html" class="nav-link">회원목록 조회</a>
+            </li>
+            <li class="nav-item">
+                <a href="/board/author/author_detail_external.html" class="nav-link">회원상세 조회</a>
+            </li>
+            <li class="nav-item">
+                <a href="/board/post/post_list_external.html"class="nav-link">게시글목록 조회</a>
+            </li>
+            <li class="nav-item">
+                <a href="/board/post/post_detail_external.html"class="nav-link">게시글상세 조회</a>
+            </li>
+            <li class="nav-item">
+                <a href="/board/author/author_register_js_json.html" class="nav-link">회원가입</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <div class="container">
+            <h3>회원 등록</h3>
+            <form>
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" class="form-control" name="name" id="name">
+                </div>
+            
+                <div class="form-group">
+                    <label for="email">email</label>
+                    <input type="text" class="form-control" name="email" id="email">
+                </div>
+            
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="8~16자 이내의 비밀번호를 입력해주세요">
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="authorRegister()">회원 가입</button>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        async function authorRegister() {
+            // 태그의 값 추출 후 객체 조립
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const data = { name:name, email:email, password:password };
+            try{
+                await axios.post("http://localhost:8080/author/register1", data);
+                alert("회원 등록 완료!")
+                window.location.href = "author_list_external.html";
+            }catch(error){
+                console.log("회원 등록 실패", error);
+                alert("회원 등록 실패")
+            }
+            // axios의 post요청을 사용하면 객체를 json으로 자동형변환
+            // 성공(정상)하면 글목화면으로 리다이렉트, 실패하면 팝업
+        }
+    </script>
+
+</body>
+</html>

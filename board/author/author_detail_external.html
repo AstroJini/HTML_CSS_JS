@@ -25,38 +25,42 @@
                 <a href="/board/post/post_detail_external.html"class="nav-link">게시글상세 조회</a>
             </li>
             <li class="nav-item">
-                <a href="/board/author/author_register_.html" class="nav-link">회원가입</a>
+                <a href="/board/author/author_register_js_json.html" class="nav-link">회원가입</a>
             </li>
         </ul>
     </nav>
 
     <div class="container">
         
-        <div class="container">
-        <h3>게시글상세조회</h3>
-        <input type="text" id="postId">
-        <button class="btn btn-primary" onclick="serverData()">조회</button>
-        <table class="table">
-            <tr>
-                <td>id</td><td id="id"></td>
-            </tr>
-            <tr>
-                <td>title</td><td id="title"></td>
-            </tr>
-            <tr>
-                <td>contents</td><td id="contents"></td>
-            </tr>
-        </table>
+        <div>    
+            <h3>회원 상세 조회</h3>
+            <input type="text" name="authorId" id="authorId">
+            <button class="btn btn-primary" onclick="serverData()">조회</button>
+            <table class="table">
+                <tr>
+                    <td>id</td><td id="id"></td>
+                </tr>
+                <tr>
+                    <td>name</td><td id="name"></td>
+                </tr>
+                <tr>
+                    <td>email</td><td id="email"></td>
+                </tr>
+            </table>
+        </div>
+
     </div>
+
+
     <script>
         async function serverData(){
             try{
-                const id = document.getElementById("postId").value;
-                const response = await axios.get(`http://localhost:8080/post/detail/${id}`);
+                const id = document.getElementById("authorId").value;
+                const response = await axios.get(`http://localhost:8080/author/detail/${id}`);
                 const result = response.data;
                 document.getElementById("id").innerHTML = result.id;
-                document.getElementById("title").innerHTML = result.title;
-                document.getElementById("contents").innerHTML = result.contents;
+                document.getElementById("name").innerHTML = result.name;
+                document.getElementById("email").innerHTML = result.email;
                 console.log(result);
             }catch(e){
                 console.log(e);
@@ -65,6 +69,5 @@
         }
 
     </script>
-
 </body>
 </html>
